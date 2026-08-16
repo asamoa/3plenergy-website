@@ -128,7 +128,7 @@ Quick steps:
 ```
 5. Done! Enquiries will come to your email.
 
-### Option 2: EmailJS (Free tier available)
+### Option 2: EmailJS (Free tier available) (this is what im going with)
 1. Sign up at [emailjs.com](https://www.emailjs.com)
 2. Create an email service
 3. Follow their integration guide
