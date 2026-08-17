@@ -113,28 +113,24 @@ The site currently uses placeholder SVG icons. To add real images:
 
 ## 📧 Making the Contact Form Functional
 
-The contact form is ready to connect! To make it send real emails:
+The contact form sends enquiries via a Google Apps Script running under your
+own Google Workspace account — no third-party form service needed.
 
-### Option 1: Formspree (Easiest - FREE) ⭐
-**See `FORMSPREE_SETUP.md` for detailed instructions!**
+**See `apps-script/SETUP.md` for step-by-step deployment instructions.**
 
-Quick steps:
+Quick summary:
+1. Deploy `apps-script/Code.gs` as a Web App at [script.google.com](https://script.google.com), set `RECIPIENT_EMAIL` to your Workspace mailbox.
+2. Paste the resulting Web App URL into the `GOOGLE_SCRIPT_URL` constant in `script.js`.
+3. Done — enquiries land in your Workspace inbox, Reply-To already set to the sender.
+
+Other options, if you'd rather use a third-party form service instead:
+
+### Formspree (FREE tier)
 1. Go to [formspree.io](https://formspree.io) and sign up
-2. Create a form named "3PL Energy Contact Form"
-3. Get your form endpoint URL
-4. Update line 232 in `index.html`:
-```html
-<form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-```
-5. Done! Enquiries will come to your email.
+2. Create a form and get your form endpoint URL
+3. Add `action="https://formspree.io/f/YOUR_FORM_ID" method="POST"` back onto the `<form id="contactForm">` tag in `index.html`
 
-### Option 2: EmailJS (Free tier available) (this is what im going with)
-1. Sign up at [emailjs.com](https://www.emailjs.com)
-2. Create an email service
-3. Follow their integration guide
-4. Add their SDK and update `script.js`
-
-### Option 3: Netlify Forms (If hosting on Netlify)
+### Netlify Forms (if hosting on Netlify)
 Simply add `data-netlify="true"` to your form:
 ```html
 <form id="contactForm" data-netlify="true">
@@ -185,5 +181,6 @@ If you encounter issues:
 
 ## 📂 Additional Documentation
 
-- **FORMSPREE_SETUP.md** - How to connect the contact form (5 minutes)
+- **apps-script/SETUP.md** - How to connect the contact form to Google Workspace (the method actually in use)
+- **FORMSPREE_SETUP.md** - Alternative: connect via Formspree instead
 - **DEPLOYMENT_GUIDE.md** - Complete deployment guide for domain, email, and hosting

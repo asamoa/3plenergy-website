@@ -58,7 +58,7 @@ a {
    =============================================== */
 .navbar {
     background-color: var(--secondary-color);
-    padding: 1rem 0;
+    padding: 0.6rem 0;
     position: fixed;
     width: 100%;
     top: 0;
@@ -79,7 +79,7 @@ a {
 }
 
 .nav-logo {
-    height: 80px;
+    height: 60px;
     width: 200px;
     display: block;
 }
@@ -403,6 +403,104 @@ a {
     border-color: var(--primary-color);
 }
 
+/* ===============================================
+   Bunkering Section (standalone, not part of Our Services)
+   =============================================== */
+.bunkering {
+    padding: var(--section-padding);
+    background-color: var(--bg-light);
+    position: relative;
+    overflow: hidden;
+}
+
+.bunkering::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('images/services-bg3.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    opacity: 0.2;
+    z-index: 0;
+}
+
+.bunkering .container {
+    position: relative;
+    z-index: 1;
+}
+
+.bunkering-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 10px;
+    border: 3px solid transparent;
+    border-image: linear-gradient(135deg, #f8c53c, #e88c2d 55%, #c42d28) 1;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+}
+
+.bunkering-icon {
+    flex-shrink: 0;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #f8c53c 0%, #e88c2d 55%, #c42d28 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bunkering-icon svg {
+    width: 34px;
+    height: 34px;
+    color: var(--text-light);
+}
+
+.bunkering-text p {
+    font-size: 1.1rem;
+    color: var(--text-gray);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.bunkering-text p:last-child {
+    margin-bottom: 0;
+}
+
+.bunkering-coverage {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.bunkering-coverage li {
+    background: linear-gradient(135deg, rgba(248, 197, 60, 0.15), rgba(196, 45, 40, 0.15));
+    color: var(--text-dark);
+    border: 1px solid rgba(232, 140, 45, 0.4);
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+@media (max-width: 700px) {
+    .bunkering-content {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.75rem;
+    }
+}
+
 .service-icon {
     width: 60px;
     height: 60px;
@@ -598,6 +696,21 @@ a {
     font-size: 0.9rem;
     color: var(--text-gray);
     text-align: center;
+}
+
+.form-status {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    text-align: center;
+    min-height: 1.2em;
+}
+
+.form-status-success {
+    color: #1e7e34;
+}
+
+.form-status-error {
+    color: #c0392b;
 }
 
 /* ===============================================

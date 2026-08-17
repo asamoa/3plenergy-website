@@ -55,40 +55,66 @@ window.addEventListener('scroll', () => {
 });
 
 // ===============================================
-// Contact Form Handling
+// Contact Form Handling (Google Apps Script backend)
 // ===============================================
-const contactForm = document.getElementById('contactForm');
+// Paste the deployment URL you get from Google Apps Script here.
+// See apps-script/SETUP.md for how to create it.
+const GOOGLE_SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
 
-// Check if form uses Formspree (has action attribute)
-if (contactForm.getAttribute('action') && contactForm.getAttribute('action').includes('formspree')) {
-    // Formspree will handle the submission, just add success feedback
-    contactForm.addEventListener('submit', (e) => {
-        // Let Formspree handle the actual submission
-        // Show a brief loading state
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-        
-        // Note: Formspree will redirect or show their success page
-        // For better UX, you can use their AJAX endpoint instead
-    });
-} else {
-    // Fallback for testing locally without Formspree setup
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form values
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const service = document.getElementById('service').value;
-        
-        alert(`Thank you for your enquiry, ${name}!\n\nService of interest: ${service}\n\nWe'll get back to you soon at ${email}.\n\nNote: To enable email delivery, please set up Formspree as described in the README.`);
-        
-        // Reset form
-        contactForm.reset();
-    });
-}
+const contactForm = document.getElementById('contactForm');
+const formStatus = document.getElementById('formStatus');
+
+contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+
+    if (GOOGLE_SCRIPT_URL.includes('PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE')) {
+        formStatus.textContent = 'Form backend not configured yet — see apps-script/SETUP.md.';
+        formStatus.className = 'form-status form-status-error';
+        return;
+    }
+
+    const data = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        company: document.getElementById('company').value,
+        service: document.getElementById('service').value,
+        message: document.getElementById('message').value
+    };
+
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    formStatus.textContent = '';
+    formStatus.className = 'form-status';
+
+    // Apps Script web apps don't return CORS headers, so the response can't
+    // be read from JS (mode: 'no-cors'). A 'text/plain' content type keeps
+    // this a "simple request" that skips the CORS preflight entirely, so the
+    // POST still reaches the script and sends the email — we just can't see
+    // the result client-side, hence the optimistic success message below.
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(data)
+    })
+        .then(() => {
+            formStatus.textContent = `Thank you, ${data.name}! Your enquiry has been sent — we'll get back to you soon.`;
+            formStatus.className = 'form-status form-status-success';
+            contactForm.reset();
+        })
+        .catch(() => {
+            formStatus.textContent = 'Something went wrong sending your enquiry. Please try again or email us directly.';
+            formStatus.className = 'form-status form-status-error';
+        })
+        .finally(() => {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
+});
 
 // ===============================================
 // Scroll Animations (Intersection Observer)
