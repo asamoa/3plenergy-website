@@ -78,6 +78,12 @@ a {
     font-weight: 700;
 }
 
+.nav-logo {
+    height: 80px;
+    width: 200px;
+    display: block;
+}
+
 .nav-menu {
     display: flex;
     list-style: none;
