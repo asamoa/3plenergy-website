@@ -73,7 +73,7 @@ a {
 }
 
 .nav-brand h2 {
-    color: var(--primary-color);
+    color: #606693;
     font-size: 1.5rem;
     font-weight: 700;
 }
