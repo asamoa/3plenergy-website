@@ -335,7 +335,7 @@ a {
     width: 100%;
     height: 450px;
     background: linear-gradient(135deg, rgba(15, 52, 96, 0.05) 0%, rgba(26, 26, 46, 0.05) 100%),
-                url('images/about-port3.jpeg');
+                url('images/about-port3.PNG');
     background-size: cover;
     background-position: center;
     border-radius: 10px;
